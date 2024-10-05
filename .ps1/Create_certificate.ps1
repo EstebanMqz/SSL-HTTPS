@@ -1,37 +1,35 @@
 <#
-Creates a self-signed .pfx certificate with a random password for HTTPS testing/development environments using the PKI module with specified DNS. It's stored in the current user's store. 
-
-.DESCRIPTION
-This script imports the PKI module and uses it to create a self-signed certificate with the specified DNS name. The certificate is stored in the current user's certificate store and is used for code signing purposes. The script also generates a random password and exports the certificate to a .pfx file.
-
-.PARAMETER DnsName
-The DNS name to be used for the self-signed certificate.
-
-.EXAMPLE
-Create-Certificate -DnsName "localhost"
-
-This example creates a self-signed certificate with the DNS name "localhost" and exports it to a .pfx file.
-
-.INPUTS
-None.
-
-.OUTPUTS
-None.
-
-.NOTES
-- This script requires the PKI module to be installed.
-- The exported .pfx file is saved to "C:\Windows\IdentityCRL\Certificate.pfx".
-- The password for the .pfx file is randomly generated and stored in the $PASSWORD variable.
+With PKI module a self-signed .pfx certificate is created with a randomly generated password for HTTPS testing/development envs with specified DNS stored in the current user's store. 
 #>
 
-# Import required module
+
+#PS built-in PKI module.
 Import-Module -Name PKI
-
-# Create self-signed certificate for HTTPS Testing/Development envs. 
+# Create self-signed certificate for HTTPS  
 $cert = New-SelfSignedCertificate -DnsName $env:COMPUTERNAME -CertStoreLocation "cert:\CurrentUser\My" -KeyUsage DigitalSignature -Type CodeSigningCert
-
 # Randomly generated password. 
 $PASSWORD = [Convert]::ToBase64String((1..16 | ForEach-Object { Get-Random -Minimum 0 -Maximum 256 }))
+# Export to .pfx file in parent dir.
+Export-PfxCertificate -cert $cert.PSPath -FilePath (Join-Path (Split-Path $PSScriptRoot -Parent) "Certificate.pfx") -Password (ConvertTo-SecureString -String "$PASSWORD" -Force -AsPlainText)
+#Success msg
+Write-Host "Certificate created successfully. Password: $PASSWORD" -ForegroundColor Green
+# Save the password to a file in parent dir.
+$parentDir = Split-Path $PSScriptRoot -Parent
+$passwordFilePath = Join-Path $parentDir "password.txt"
+Set-Content -Path $passwordFilePath -Value $PASSWORD
+# Encrypt password.txt with GPG
 
-# Export to .pfx file 
-Export-PfxCertificate -cert $cert.PSPath -FilePath "C:\Windows\IdentityCRL\Certificate.pfx" -Password (ConvertTo-SecureString -String "$PASSWORD" -Force -AsPlainText)
+# Check if running as administrator
+if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
+    Write-Warning "You need to run this script as an Administrator."
+    Break
+}
+# Check if gpg is installed
+if (!(Get-Command -Name gpg -ErrorAction SilentlyContinue)) {
+    Write-Host "Installing gpg package..."
+    choco install gpg -y
+}
+
+& gpg --encrypt --recipient 'emarquez1895@gmail.com' $passwordFilePath
+# Delete password .txt file
+Remove-Item -Path $passwordFilePath

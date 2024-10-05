@@ -1,17 +1,43 @@
-====================================================================================================
-==          NOTICE file corresponding to the Apache License, Version 2.0 for                      ==
-==  [SSL-HTTPS](https://github.com/EstebanMqz/SSL-HTTPS) usage, redistributions or contributions. ==		       
-====================================================================================================
+<div align= "center"> 
+
+# <b>[NOTICE](https://github.com/EstebanMqz/SSL-HTTPS/NOTICE)</b> file of <b>Apache License</b> Version 2.0 
+
+<div style="
+    height: 2px; 
+    background: linear-gradient(270deg, blue, white, red);
+    background-size: 200% 200%;
+    animation: gradient 3s ease infinite;
+    ">
+</div>
+
+<style>
+@keyframes gradient {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+}
+</style>
+
+<br>
+
+### <i><b>[SSL-HTTPS](https://github.com/EstebanMqz/SSL-HTTPS)</b> <i>usage, redistributions or contributions.</i>
+</div></i>
 
 Attach the following in your work References: 
 
-(Optional:) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+<b> © Copyright 2024 [EstebanMqz](https://github.com/EstebanMqz)
+developed with [SSL-HTTPS](https://github.com/EstebanMqz/SSL-HTTPS). </b>
 
-"© Copyright 2024 [EstebanMqz](https://github.com/EstebanMqz)
-developed with [SSL-HTTPS](https://github.com/EstebanMqz/SSL-HTTPS)."
-
-Note: Portions of this software was developed at the domain epicenter of SuperComputers 
+<b>Note:</b>, <I>Portions of this software was developed at the domain epicenter of SuperComputers 
 [NCSA](https://www.ncsa.illinois.edu) a recognition granted by the 
 [NSF](https://en.wikipedia.org/wiki/National_Science_Foundation) 
 which is the budgetted independent federal agency from the USA government veiling for research, education, science and engineering. 	
-It also contains work of "RSA-Data-Security.Inc" & modifications from "Spyglass.Inc" & "Bellcore.Inc".
+It also contains work of "RSA-Data-Security.Inc" & modifications from "Spyglass.Inc" & "Bellcore.Inc".</I>
+
+<div align= "left">
+<b>Attach in References:</b> 
+
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+
+See the [LICENSE](./LICENSE) for more details.
+</div>

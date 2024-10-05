@@ -1,5 +1,5 @@
 #!/bin/bash
-# Description: Generate private key for CA, server  client and their self-signed certificate.
+# Description: Generate private key for CA, server client and their self-signed certificate.
 
 #Variables
 KEY_DIR=".key"
@@ -19,7 +19,7 @@ generate_key() {
     openssl genpkey -algorithm $ALGORITHM -out $KEY_DIR/$name.key -pkeyopt rsa_keygen_bits:$BITS
 }
 
-create_certificate() {
+Create_CRT() {
     #Use OpenSSL to create the .crt certificate with its private key
     local name=$1
     openssl req -x509 -new -nodes -key $KEY_DIR/$name.key -sha256 -days $DAYS -out $CRT_DIR/$name.crt
